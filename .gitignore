@@ -1,3 +1,5 @@
 *.gem
+*.tar
 *.tar.gz
-
+.env
+.DS_Store

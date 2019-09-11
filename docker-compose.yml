@@ -7,13 +7,13 @@ services:
     command:
     - --loglevel warning
     volumes:
-    - /srv/docker/gitlab/redis:/var/lib/redis:Z
+    - ${REDIS_BACKUP_PATH}:/var/lib/redis:Z
 
   postgresql:
     restart: always
     image: sameersbn/postgresql:10-2
     volumes:
-    - /srv/docker/gitlab/postgresql:/var/lib/postgresql:Z
+    - ${POSTGRES_BACKUP_PATH}:/var/lib/postgresql:Z
     environment:
     - DB_USER=gitlab
     - DB_PASS=password
@@ -22,7 +22,7 @@ services:
 
   gitlab:
     restart: always
-    image: sameersbn/gitlab:12.2.1-1
+    image: limbix/gitlab:1.0
     depends_on:
     - redis
     - postgresql
@@ -30,7 +30,8 @@ services:
     - "10080:80"
     - "10022:22"
     volumes:
-    - /srv/docker/gitlab/gitlab:/home/git/data:Z
+    - ${GITLAB_BACKUP_PATH}:/home/git/data:Z
+    - /share/homes/admin/NAS-Content-Test:/NAS-content
     environment:
     - DEBUG=false
 
@@ -50,9 +51,10 @@ services:
     - GITLAB_HTTPS=false
     - SSL_SELF_SIGNED=false
 
-    - GITLAB_HOST=localhost
+    - GITLAB_HOST=${NAS_IP_ADDR}
     - GITLAB_PORT=10080
     - GITLAB_SSH_PORT=10022
+    - GITLAB_LFS_ENABLED=true
     - GITLAB_RELATIVE_URL_ROOT=
     - GITLAB_SECRETS_DB_KEY_BASE=long-and-random-alphanumeric-string
     - GITLAB_SECRETS_SECRET_KEY_BASE=long-and-random-alphanumeric-string

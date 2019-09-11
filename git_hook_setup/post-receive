@@ -1,0 +1,4 @@
+#!/bin/bash
+read oldrev newrev ref
+branch_name="$(cut -d'/' -f3 <<< "$ref")"
+sudo ./post-receive-script.sh "$branch_name"

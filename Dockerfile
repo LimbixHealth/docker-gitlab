@@ -59,6 +59,10 @@ RUN set -ex && \
 COPY assets/build/ ${GITLAB_BUILD_DIR}/
 RUN bash ${GITLAB_BUILD_DIR}/install.sh
 
+RUN sudo echo 'git ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN mkdir /home/git_hook_setup
+COPY git_hook_setup/ /home/git_hook_setup/
+
 COPY assets/runtime/ ${GITLAB_RUNTIME_DIR}/
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh

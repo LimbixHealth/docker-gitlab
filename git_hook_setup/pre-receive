@@ -1,0 +1,10 @@
+#!/bin/bash
+read oldrev newrev ref
+branch_name="$(cut -d'/' -f3 <<< "$ref")"
+if [ -f "${branch_name}.lock" ]
+then
+    echo "${branch_name}.lock exists: another post-receive hook is currently being run for this branch"
+    exit 1
+else
+  touch "${branch_name}.lock"
+fi
