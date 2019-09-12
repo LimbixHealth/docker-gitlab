@@ -8,7 +8,7 @@
 4. `docker save -o limbix-gitlab.tar limbix/gitlab:1.0`
 5. Log into NAS in your browser and open Container Station, then click 'import' and import the `limbix-gitlab.tar` file
 6. Click 'Create' on sidebar then click 'Create new application'
-7. Copy and paste the contents of the `docker-compose.yml` file and replace the ${NAS_IP_ADDR}, ${GITLAB_BACKUP_PATH}, ${REDIS_BACKUP_PATH}, and ${POSTGRES_BACKUP_PATH} with actual directory paths
+7. Copy and paste the contents of the `docker-compose.yml` file and replace the ${NAS_IP_ADDR}, ${GITLAB_BACKUP_PATH}, ${REDIS_BACKUP_PATH}, and ${POSTGRES_BACKUP_PATH} with actual values
 8. Start the app
 9. Go to `192.168.86.132:10800` in your browser and login as root. Go to admin panel (wrench in top bar) and click on the content repo. Copy the 'Gitaly relative path' to your clipboard.
 10. SSH into the NAS, then run `docker exec -it <gitlab_container_id> /bin/bash` (get container ID with `docker ps`). Run `cd /home/git_hook_setup` then `./setup-hooks <copied_gitaly_path>`.
